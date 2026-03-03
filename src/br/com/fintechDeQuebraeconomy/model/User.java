@@ -10,12 +10,10 @@ public class User {
     private String email;
     private String password;
     private LocalDate birthDate;
-    private List<Transaction> transactions;
     //Criar a lista de Transactions aqui
+    private List<Transaction> transactions;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(String name, String cpf, String email, String password, LocalDate birthDate) {
         this.name = name;

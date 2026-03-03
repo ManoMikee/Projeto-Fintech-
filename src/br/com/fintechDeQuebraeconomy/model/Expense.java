@@ -53,4 +53,16 @@ public class Expense extends Transaction {
         }
 
     }
+
+    @Override
+        public String showTransaction(){
+            return  String.format("""
+                Descrição: %s
+                Valor:  %.2f
+                Data: %s
+                Metodo de pagamento: %s
+                Status do pagamento: %b
+                Gasto Recorrente: %b
+                """,getDescription(), getAmount(), getDate(), getPaymentMethod(),isPaymentStatus(), isRecurringPayment());
+    }
 }
