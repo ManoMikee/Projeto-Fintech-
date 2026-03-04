@@ -39,7 +39,7 @@ public abstract class Transaction {
     }
 
     public void setDescription(String description) {
-        if (this.description.length() <= 150) {
+        if (description != null && description.length() <= 150) {
             this.description = description;
         } else {
             System.out.println("Descrição muito longa.");

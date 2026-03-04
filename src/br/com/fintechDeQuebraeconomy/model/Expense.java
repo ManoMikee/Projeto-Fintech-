@@ -15,6 +15,7 @@ public class Expense extends Transaction {
 
     public Expense(LocalDate date, BigDecimal amount, String description, String paymentMethod, boolean paymentStatus, boolean recurringPayment) {
         super(date, amount, description);
+        setAmount(amount);
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
         this.recurringPayment = recurringPayment;
@@ -46,12 +47,7 @@ public class Expense extends Transaction {
 
     @Override
     public void setAmount(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) > 0) {
-            this.amount = amount.negate();
-        } else {
-            this.amount = amount;
-        }
-
+        this.amount = amount.abs().negate();
     }
 
     @Override

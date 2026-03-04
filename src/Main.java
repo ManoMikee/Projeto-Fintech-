@@ -5,7 +5,6 @@ import br.com.fintechDeQuebraeconomy.model.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.Scanner;
 
 public  class Main {
