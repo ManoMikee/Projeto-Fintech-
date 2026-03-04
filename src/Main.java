@@ -1,5 +1,6 @@
 import br.com.fintechDeQuebraeconomy.model.Expense;
 import br.com.fintechDeQuebraeconomy.model.Goal;
+import br.com.fintechDeQuebraeconomy.model.Income;
 import br.com.fintechDeQuebraeconomy.model.Transaction;
 import br.com.fintechDeQuebraeconomy.model.User;
 
@@ -24,7 +25,8 @@ public  class Main {
                                 Selecione a opção:
                                 1- Cadastro:
                                 2- Adicionar Gasto:
-                                3- Exibir Transações
+                                3- Exibir Transações:
+                                4- Adicionar Receita
                                 5- Objetivos
                                 0- Sair.
                                 """));
@@ -84,7 +86,7 @@ public  class Main {
                                         sc.nextLine();
                                         System.out.println("Metodo de pagamento: ");
                                         String paymentMethod = sc.nextLine();
-                                        System.out.println("Statudo do pagamento: ");
+                                        System.out.println("Status do do pagamento: ");
                                         boolean paymentStatus = sc.nextBoolean();
                                         System.out.println("Gasto recente: ");
                                         boolean recurringPayment = sc.nextBoolean();
@@ -97,6 +99,7 @@ public  class Main {
                                                 System.out.println("Cadastre um Usuário! ");
                                                 break;
                                         }
+                         
                                         if (gasto1 == null) {
                                                 System.out.println("Cadastre uma transação!");
                                                 break;
@@ -105,6 +108,47 @@ public  class Main {
                                                 System.out.println(t.showTransaction());
                                         }
                                         break;
+                          
+                                case 4:
+                                        if(user1 == null){
+                                                System.out.println("Cadastre um usuário primeiro.");
+                                                break;
+                                        }
+
+                                        System.out.println("ADICIONAR RECEITA");
+
+                                        System.out.println("Digite o valor:");
+                                        BigDecimal amountR = sc.nextBigDecimal();
+                                        sc.nextLine();
+
+                                        System.out.println("Descrição:");
+                                        String descriptionR = sc.nextLine();
+
+                                        System.out.println("Digite o dia:");
+                                        int dayR = sc.nextInt();
+                                        sc.nextLine();
+
+                                        System.out.println("Digite o mês:");
+                                        int monthR = sc.nextInt();
+                                        sc.nextLine();
+
+                                        System.out.println("Digite o ano:");
+                                        int yearR = sc.nextInt();
+                                        sc.nextLine();
+
+                                        LocalDate dateR = LocalDate.of(yearR, monthR, dayR);
+
+                                        System.out.println("Fonte da receita:");
+                                        String source = sc.nextLine();
+
+                                        Transaction receita = new Income(dateR, amountR, descriptionR, source);
+
+                                        user1.addTransaction(receita);
+
+                                        System.out.println("Receita adicionada com sucesso.");
+                                        break;
+
+
 
                                 case 5:
                                         if (user1 == null) {
@@ -169,7 +213,6 @@ public  class Main {
                                                                                       + theGoal.getEndDate());
                                                                         }
                                                                         System.out.println(" ");
-
                                                                         int op3 = sc.nextInt();
                                                                         sc.nextLine();
 
@@ -206,3 +249,4 @@ public  class Main {
                 } while (op != 0);
         }
 }
+                                                                 
