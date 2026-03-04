@@ -97,7 +97,7 @@ public  class Main {
                                         }
 
 
-                                        if(gasto1 == null){
+                                        if(user1.getTransactions().isEmpty()){
                                                 System.out.println("Cadastre uma transação!");
                                                 break;
                                         }
