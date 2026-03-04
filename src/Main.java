@@ -144,7 +144,7 @@ public  class Main {
 
                                         System.out.println("Receita adicionada com sucesso.");
                                         break;
-                                        
+
                         }
                 }while(op != 0);
         }
