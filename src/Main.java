@@ -82,9 +82,9 @@ public  class Main {
                                         sc.nextLine();
                                         System.out.println("Metodo de pagamento: ");
                                         String paymentMethod = sc.nextLine();
-                                        System.out.println("Status do do pagamento: ");
+                                        System.out.println("Status do do pagamento: true/false");
                                         boolean paymentStatus = sc.nextBoolean();
-                                        System.out.println("Gasto recente: ");
+                                        System.out.println("Gasto recente: true/false");
                                         boolean recurringPayment = sc.nextBoolean();
                                          gasto1 = new Expense(transactionDay,amount,description,paymentMethod,paymentStatus,recurringPayment);
                                          user1.addTransaction(gasto1);
