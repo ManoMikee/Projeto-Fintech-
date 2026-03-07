@@ -5,46 +5,36 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.math.BigDecimal;
 
-public class Goal {
+public class Goal extends Transaction {
 
     // Atributos
-    private String title;
     private BigDecimal stipulatedAmount;
     private LocalDate endDate;
     private BigDecimal currentValue;
 
     // Construtor Vazio
-    public Goal() {}
+    public Goal() {super();}
 
     // Construtor Cheio
-    public Goal(String title, BigDecimal stipulatedAmount, LocalDate endDate) {
-        this.title = title;
+    public Goal(String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate) {
+        super(date, BigDecimal.ZERO , description);
         this.stipulatedAmount = stipulatedAmount;
         this.endDate = endDate;
         this.currentValue = BigDecimal.ZERO;
     }
 
-
     // Getters e Setters
-    public String getTitle(){return title;}
-
-    public void setTitle(String title){
-        if (title == null || title.trim().isEmpty()){
-            System.out.println("Adicione um válido título ao seu objetivo.");
-        }
-        else{ this.title = title; }
-    }
-
     public BigDecimal getStipulatedAmount() {return stipulatedAmount;}
 
     public void setStipulatedAmount(BigDecimal stipulatedAmount) {
-        if (stipulatedAmount.scale() <= 2 & stipulatedAmount. precision() <= 10 ){
-            this.stipulatedAmount = stipulatedAmount;
-        }
-        else if (stipulatedAmount == null){
+        if (stipulatedAmount == null) {
             System.out.println("Forneça um valor válido para seu Objetivo.");
         }
-        else if (stipulatedAmount.precision() > 10){
+
+        if (stipulatedAmount.scale() <= 2 && stipulatedAmount. precision() <= 10 ){
+            this.stipulatedAmount = stipulatedAmount;
+        }
+        else {
             System.out.println("Valor estipulado excede o limite permitido.");
         }
 
@@ -63,15 +53,40 @@ public class Goal {
     }
 
     // Outros Métodos
+    @Override
+    public void setAmount(BigDecimal amount){this.amount = amount; }
 
-    public void addValue(BigDecimal amout){
-        if (amout.compareTo(BigDecimal.ZERO) <= 0 ){
-            System.out.println("O valor fornecido é menor ou igual a 0");
+    @Override
+    public String showTransaction(){
+        return String.format("""
+                Descrição: %s
+                Valor: %.2f
+                Data: %s
+                Acumulado: %.2f
+                Concluído: %b
+                """,getDescription(), getAmount().negate(), getDate(), getCurrentValue(), goalAchieved());
+
+    }
+
+    public String showGoal() {
+        return String.format("""
+                Descrição: %s
+                Meta: R$%s
+                Concluído: %b
+                Acumulado: R$%s
+                Data Final: %s
+                """, getDescription(), getStipulatedAmount(), goalAchieved(), getCurrentValue(), getEndDate());
+    }
+
+    public void addValue(BigDecimal amount){
+
+        if (amount.compareTo(BigDecimal.ZERO) <= 0 ){
             System.out.println("Forneça um valor válido");
+            return;
         }
-        else {
-            currentValue = currentValue.add(amout);
-        }
+
+            currentValue = currentValue.add(amount);
+
     }
 
     public BigDecimal surplus(){
@@ -79,17 +94,21 @@ public class Goal {
     }
 
     public boolean goalAchieved(){
-        boolean status = false;
-        if (currentValue.compareTo(stipulatedAmount) >= 0){
-            status = true;
-        }
-        return status;
+        return currentValue.compareTo(stipulatedAmount) >= 0;
     }
 
     public BigDecimal percentage(){
-        BigDecimal hundred = new BigDecimal(100);
+        BigDecimal hundred = BigDecimal.valueOf(100);
         BigDecimal percent = currentValue.multiply(hundred).divide(stipulatedAmount,2, RoundingMode.HALF_UP);
         return percent;
+    }
+
+    // Cópia | Registro
+    public Goal(Goal other) {
+        super(LocalDate.now(), other.amount, other.description);
+        this.stipulatedAmount = other.stipulatedAmount;
+        this.endDate = other.endDate;
+        this.currentValue = other.currentValue;
     }
 
 }
