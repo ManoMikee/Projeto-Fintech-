@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.math.BigDecimal;
 
-public class Goal {
+public class Goal extends Transaction{
 
     // Atributos
     private String title;
@@ -14,10 +14,21 @@ public class Goal {
     private BigDecimal currentValue;
 
     // Construtor Vazio
-    public Goal() {}
+    public Goal() {super();}
+
+    @Override
+    public void setAmount(BigDecimal amount) {
+
+    }
+
+    @Override
+    public String showTransaction() {
+        return "";
+    }
 
     // Construtor Cheio
-    public Goal(String title, BigDecimal stipulatedAmount, LocalDate endDate) {
+    public Goal(LocalDate date,BigDecimal amount, String description ,String title, BigDecimal stipulatedAmount, LocalDate endDate) {
+        super(date, amount, description);
         this.title = title;
         this.stipulatedAmount = stipulatedAmount;
         this.endDate = endDate;
@@ -38,7 +49,7 @@ public class Goal {
     public BigDecimal getStipulatedAmount() {return stipulatedAmount;}
 
     public void setStipulatedAmount(BigDecimal stipulatedAmount) {
-        if (stipulatedAmount.scale() <= 2 & stipulatedAmount. precision() <= 10 ){
+        if (stipulatedAmount.scale() <= 2 && stipulatedAmount. precision() <= 10 ){
             this.stipulatedAmount = stipulatedAmount;
         }
         else if (stipulatedAmount == null){

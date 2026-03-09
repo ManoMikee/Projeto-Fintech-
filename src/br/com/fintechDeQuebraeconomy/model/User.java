@@ -82,4 +82,10 @@ public class User {
     public void addTransaction(Transaction t) {
         transactions.add(t);
     }
+
+    public void showTransactions(){
+        for(Transaction t : transactions){
+            System.out.println(t.showTransaction());
+        }
+    }
 }

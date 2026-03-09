@@ -1,6 +1,7 @@
 package br.com.fintechDeQuebraeconomy.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class Expense extends Transaction {
@@ -59,6 +60,6 @@ public class Expense extends Transaction {
                 Metodo de pagamento: %s
                 Status do pagamento: %b
                 Gasto Recorrente: %b
-                """,getDescription(), getAmount(), getDate(), getPaymentMethod(),isPaymentStatus(), isRecurringPayment());
+                """,getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(), getPaymentMethod(),isPaymentStatus(), isRecurringPayment());
     }
 }

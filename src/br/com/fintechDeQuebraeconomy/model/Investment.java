@@ -12,13 +12,14 @@ public class Investment extends Transaction {
     private boolean taxable;
     private BigDecimal interestRate;
 
-    public Investment(LocalDate date, BigDecimal amount, String description, LocalDate payoutDate, String investmentName, String issuingBank, boolean taxable){
+    public Investment(LocalDate date, BigDecimal amount, String description, LocalDate payoutDate, String investmentName, String issuingBank, boolean taxable, BigDecimal interestRate){
         super(date, amount, description);
         setAmount(amount);
         this.payoutDate = payoutDate;
         this.investmentName = investmentName;
         this.issuingBank  = issuingBank;
         this.taxable = taxable;
+        this.interestRate = interestRate;
     }
 
 
@@ -167,7 +168,6 @@ public class Investment extends Transaction {
     public BigDecimal calculateTotalAtMaturity(){
         return getAmount().abs().add(calculateNetReturn());
     }
-0
 
     @Override
     public void setAmount(BigDecimal amount) {
@@ -187,6 +187,6 @@ public class Investment extends Transaction {
                 Instituição Financeira %s
                 Sujeito a IR: %b
                 Taxa de rendimento: %.2f
-                """,getInvestmentName(),getDescription(), getAmount().setScale(2, RoundingMode.HALF_UP), getDate(),getPayoutDate(),getIssuingBank(),isTaxable(),getInterestRate());
+                """,getInvestmentName(),getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(),getPayoutDate(),getIssuingBank(),isTaxable(),getInterestRate());
     }
 }
