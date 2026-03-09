@@ -20,11 +20,11 @@ public  class Main {
                         System.out.println(String.format("""
                                 Selecione a opção:
                                 1- Cadastro:
-                                2- Adicionar Gasto:
-                                3- Exibir Transações:
+                                2- Adicionar Gasto
+                                3- Exibir Transações
                                 4- Adicionar Receita
                                 5- Objetivos
-                                6- Investimentos
+                                6- Adicionar Investimento
                                 0- Sair.
                                 """));
 
@@ -83,9 +83,9 @@ public  class Main {
                                         sc.nextLine();
                                         System.out.println("Metodo de pagamento: ");
                                         String paymentMethod = sc.nextLine();
-                                        System.out.println("Status do do pagamento:True/ False ");
+                                        System.out.println("Status do do pagamento: ");
                                         boolean paymentStatus = sc.nextBoolean();
-                                        System.out.println("Gasto recente: True/False ");
+                                        System.out.println("Gasto recente: ");
                                         boolean recurringPayment = sc.nextBoolean();
                                         gasto1 = new Expense(transactionDay, amount, description, paymentMethod, paymentStatus, recurringPayment);
                                         user1.addTransaction(gasto1);
@@ -101,10 +101,11 @@ public  class Main {
                                                 System.out.println("Cadastre uma transação!");
                                                 break;
                                         }
-
-                                        user1.showTransactions();
+                                        for (Transaction t : user1.getTransactions()) {
+                                                System.out.println(t.showTransaction());
+                                        }
                                         break;
-
+                          
                                 case 4:
                                         if(user1 == null){
                                                 System.out.println("Cadastre um usuário primeiro.");
@@ -180,8 +181,8 @@ public  class Main {
                                                                 int yearG = sc.nextInt();
                                                                 LocalDate GoalDay = LocalDate.of(yearG, monthG, dayG);
                                                                 sc.nextLine();
-//                                                                Goal newGoal = new Goal(title, amount2, GoalDay);
-//                                                                listGoals.add(newGoal);
+                                                                Goal newGoal = new Goal(title, amount2, GoalDay);
+                                                                listGoals.add(newGoal);
                                                                 System.out.println("Objetivo criado com sucesso!");
                                                                 System.out.println(" ");
 
@@ -239,50 +240,45 @@ public  class Main {
 
                                                 break;
                                                 }
+
                                 case 6:
-                                        System.out.println("Adicionar Investimento: ");
-                                        System.out.println("Informe da ta do investimento: ");
-                                        System.out.println("Informe o dia");
-                                        int dayIni  = sc.nextInt();
+                                        System.out.println("Adicionar investimento: ");
+                                        System.out.println("Informe a dia que o  investimento foi feito: ");
+                                        int dayInvest = sc.nextInt();
                                         sc.nextLine();
-                                        System.out.println("Informe o mes ");
-                                        int monthIni  = sc.nextInt();
+                                        System.out.println("Informe a mes que o  investimento foi feito: ");
+                                        int monthInvest = sc.nextInt();
                                         sc.nextLine();
-                                        System.out.println("Informe o ano ");
-                                        int yearIni  = sc.nextInt();
+                                        System.out.println("Informe a ano que o  investimento foi feito: ");
+                                        int yearInvest = sc.nextInt();
                                         sc.nextLine();
-                                        LocalDate iniInvest = LocalDate.of(yearIni,monthIni,dayIni);
-                                        System.out.println("Valor investido: ");
-                                        BigDecimal amountInvest = sc.nextBigDecimal();
+                                        LocalDate iniInvest = LocalDate.of(yearInvest,monthInvest,dayInvest);
+                                        System.out.println("Valor aplicado: ");
+                                        BigDecimal valorInvest = sc.nextBigDecimal();
                                         sc.nextLine();
                                         System.out.println("Descrição: ");
                                         String descriptionInvest = sc.nextLine();
-                                        System.out.println("Informe a data do Vencimento: ");
-                                        System.out.println("Informe o dia do vencimento: ");
+                                        System.out.println("Informe a dia de vencimento do título : ");
                                         int dayPayout = sc.nextInt();
                                         sc.nextLine();
-                                        System.out.println("Informe o mês do vencimento: ");
+                                        System.out.println("Informe o mes de vencimento do título: ");
                                         int monthPayout = sc.nextInt();
                                         sc.nextLine();
-                                        System.out.println("Informe o dia do vencimento: ");
+                                        System.out.println("Informe a ano de vencimento do título:  ");
                                         int yearPayout = sc.nextInt();
                                         sc.nextLine();
                                         LocalDate payoutDate = LocalDate.of(yearPayout,monthPayout,dayPayout);
                                         System.out.println("Nome do investimento: ");
-                                        String investName = sc.nextLine();
-                                        System.out.println("Nome da instituição/ corretora: ");
+                                        String nomeInvest = sc.nextLine();
+                                        System.out.println("Nome da instituição / corretora :");
                                         String nomeCorretora = sc.nextLine();
-                                        System.out.println("Sujeito a imposto de Renda: True/false");
+                                        System.out.println("Sujeito a imposto de renda: ");
                                         boolean sujeitoIR = sc.nextBoolean();
-                                        System.out.println("Taxa de juros ao ano: ");
-                                        BigDecimal taxaAnualJuros = sc.nextBigDecimal();
+                                        System.out.println("Rendimento anual em %");
+                                        BigDecimal taxaDeJuros = sc.nextBigDecimal();
                                         sc.nextLine();
-
-                                        Transaction investment = new Investment(iniInvest, amountInvest, descriptionInvest,payoutDate,investName,nomeCorretora,sujeitoIR,taxaAnualJuros);
-
+                                        Transaction investment = new Investment(iniInvest, valorInvest, descriptionInvest, payoutDate, nomeInvest, nomeCorretora, sujeitoIR, taxaDeJuros );
                                         user1.addTransaction(investment);
-
-
                                         break;
 
                                         }

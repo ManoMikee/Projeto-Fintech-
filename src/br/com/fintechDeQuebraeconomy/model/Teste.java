@@ -16,7 +16,6 @@ public class Teste {
         Transaction investimento4 = new Investment(hoje, new BigDecimal("1000"),"Cdb",vence,"tesouro","itau",true, new BigDecimal("20"));
         Transaction investimento5 = new Investment(hoje, new BigDecimal("1000"),"Cdb",vence,"tesouro","itau",true, new BigDecimal("20"));
 
-        Transaction goal = new Goal(hoje,new BigDecimal("200"),"sad","dsds",new BigDecimal("10000"),vence);
 
         usuario.addTransaction(investimento);
         usuario.addTransaction(investimento2);
