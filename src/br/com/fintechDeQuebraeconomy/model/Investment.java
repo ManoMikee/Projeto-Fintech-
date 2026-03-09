@@ -167,7 +167,6 @@ public class Investment extends Transaction {
     public BigDecimal calculateTotalAtMaturity(){
         return getAmount().abs().add(calculateNetReturn());
     }
-0
 
     @Override
     public void setAmount(BigDecimal amount) {

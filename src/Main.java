@@ -66,7 +66,7 @@ public  class Main {
 
                                 case 2:
                                         if (user1 == null) {
-                                                System.out.println("Cadastre um usu[ario primeiro.");
+                                                System.out.println("Cadastre um usuário primeiro.");
                                         }
                                         System.out.println("ADICIONAR GASTO");
                                         System.out.println("Digite o valor");
@@ -77,10 +77,10 @@ public  class Main {
                                         System.out.println("Digite o dia: ");
                                         int dayT = sc.nextInt();
                                         sc.nextLine();
-                                        System.out.println("Digite o mês do seu aniversário");
+                                        System.out.println("Digite o mês: ");
                                         int monthT = sc.nextInt();
                                         sc.nextLine();
-                                        System.out.println("Digite o ano do seu aniversário");
+                                        System.out.println("Digite o ano: ");
                                         int yearT = sc.nextInt();
                                         LocalDate transactionDay = LocalDate.of(yearT, monthT, dayT);
                                         sc.nextLine();
@@ -149,30 +149,38 @@ public  class Main {
                                         break;
 
 
+                                        case 5:
+                                               if (user1 == null) {
+                                                       System.out.println("Cadastre um Usuário! ");
+                                                       System.out.println(" ");
+                                                        break;
+                                               }
 
-                                case 5:
-                                        if (user1 == null) {
-                                                System.out.println("Cadastre um Usuário! ");
-                                                System.out.println(" ");
-                                                break;
-                                        }
+                                                System.out.println(String.format("""        
+                                                               Selecione a opção:
+                                                               1- Adicionar novo objetivo
+                                                               2- Adicionar valor a um Objetivo
+                                                        """));
 
-                                        System.out.println(String.format("""        
-                                        Selecione a opção:
-                                        1- Adicionar novo objetivo
-                                        2- Adicionar valor a um Objetivo
-                                        """));
-
-                                        int op2 = sc.nextInt();
-                                        sc.nextLine();
+                                                int op2 = sc.nextInt();
+                                                sc.nextLine();
 
                                                 switch (op2) {
                                                         case 1:
                                                                 System.out.println("ADICIONAR NOVO OBJETIVO");
-                                                                System.out.println("Digite um título para seu objetivo: ");
-                                                                String title = sc.nextLine();
+                                                                System.out.println("Descrição / Nome: ");
+                                                                String description1 = sc.nextLine();
                                                                 System.out.println("Digite o valor do Objetivo: ");
                                                                 BigDecimal amount2 = sc.nextBigDecimal();
+                                                                sc.nextLine();
+                                                                System.out.println("Digite o Dia: ");
+                                                                int day2 = sc.nextInt();
+                                                                sc.nextLine();
+                                                                System.out.println("Digite o Mês: ");
+                                                                int month2 = sc.nextInt();
+                                                                sc.nextLine();
+                                                                System.out.println("Digite o Ano: ");
+                                                                int year2 = sc.nextInt();
                                                                 sc.nextLine();
                                                                 System.out.println("Informe o dia final da seu objetivo: ");
                                                                 int dayG = sc.nextInt();
@@ -182,62 +190,83 @@ public  class Main {
                                                                 sc.nextLine();
                                                                 System.out.println("Informe o ano final da seu objetivo: ");
                                                                 int yearG = sc.nextInt();
+                                                                LocalDate date2 = LocalDate.of(year2, month2, day2);
                                                                 LocalDate GoalDay = LocalDate.of(yearG, monthG, dayG);
                                                                 sc.nextLine();
-                                                                Goal newGoal = new Goal(title, amount2, GoalDay);
+                                                                Goal newGoal = new Goal(description1, date2, amount2, GoalDay);
                                                                 listGoals.add(newGoal);
                                                                 System.out.println("Objetivo criado com sucesso!");
-                                                                System.out.println(" ");
+                                                                System.out.println();
 
                                                                 break;
 
                                                         case 2:
-                                                                if (listGoals == null) {
+                                                                if (listGoals.isEmpty()) {
                                                                         System.out.println("Você ainda não possui objetivos cadastrados.");
                                                                         System.out.println(" ");
                                                                         break;
-                                                                }
-                                                                else{
+                                                                } else {
                                                                         System.out.println("ESCOLHA UM OBJETIVO: ");
-                                                                        for (int i = 0; i < listGoals.size(); i++){
+                                                                        for (int i = 0; i < listGoals.size(); i++) {
                                                                                 Goal theGoal = listGoals.get(i);
-
-                                                                              System.out.println((i + 1) + "- " + theGoal.getTitle()
-                                                                                      + " = Meta: R$"
-                                                                                      + theGoal.getStipulatedAmount()
-                                                                                      + " | Conluído: "
-                                                                                      + theGoal.goalAchieved()
-                                                                                      + " | Acumulado: R$"
-                                                                                      + theGoal.getCurrentValue()
-                                                                                      + " | Data final: "
-                                                                                      + theGoal.getEndDate());
+                                                                                System.out.printf("""
+                                                                                        %d.
+                                                                                        %s
+                                                                                        
+                                                                                        """, (i + 1), theGoal.showGoal());
                                                                         }
-                                                                        System.out.println(" ");
+
                                                                         int op3 = sc.nextInt();
                                                                         sc.nextLine();
 
-                                                                        Goal addTargetValue = listGoals.get(op3 -1);
+                                                                        Goal addGoal = listGoals.get(op3 -1);
 
                                                                         System.out.println("Digite o valor que deseja adicionar: ");
                                                                         BigDecimal amount3 = sc.nextBigDecimal();
                                                                         sc.nextLine();
 
-                                                                        addTargetValue.addValue(amount3);
+                                                                        addGoal.addValue(amount3);
 
-                                                                        if (addTargetValue.goalAchieved()){
-                                                                                BigDecimal surplus = addTargetValue.surplus();
+                                                                        Goal transactionGoal = new Goal(addGoal);
+
+                                                                        transactionGoal.setAmount(amount3);
+                                                                        transactionGoal.setCurrentValue(addGoal.getCurrentValue());
+
+                                                                        user1.addTransaction(transactionGoal);
+
+                                                                        gasto1 = transactionGoal;
+
+
+                                                                        if (addGoal.goalAchieved()){
+                                                                                BigDecimal surplus = addGoal.surplus();
 
                                                                                 if (surplus.compareTo(BigDecimal.ZERO) > 0){
-                                                                                        System.out.println("Meta atingida!");
-                                                                                        System.out.println("Você ultrapassou em R$" + surplus);
+                                                                                        System.out.printf("""
+                                                                                               Meta atingida!
+                                                                                               %s
+                                                                                               Meta: R$%.2f | Progresso: 100%%
+                                                                                               Você ultrapassou em R$%.2f
+                                                                                               
+                                                                                               """, addGoal.getDescription(), addGoal.getStipulatedAmount(), addGoal.surplus());
+
                                                                                 } else{
-                                                                                        System.out.println("Meta atingida com sucesso!");
+                                                                                        System.out.printf("""
+                                                                                               Meta atingida com sucesso!
+                                                                                               %s
+                                                                                               Meta: R$%.2f | Progresso: %.2f%%
+                                                                                               
+                                                                                                """, addGoal.getDescription(), addGoal.getStipulatedAmount() ,addGoal.percentage());
                                                                                 }
 
                                                                         }else{
-                                                                                System.out.println("Valor adicionaldo com sucesso!");
-                                                                                System.out.println("Total acumulado atual: R$" + addTargetValue.getCurrentValue() + " | Progresso: " + addTargetValue.percentage() + "%");
+                                                                                System.out.printf("""
+                                                                                        Valor adicionado com sucesso!
+                                                                                        %s
+                                                                                        Valor acumulado: R$%s | Progresso: %.2f%%
+                                                                                        
+                                                                                        """, addGoal.getDescription(), addGoal.getCurrentValue(), addGoal.percentage());
                                                                         }
+
 
                                                                 }
 
