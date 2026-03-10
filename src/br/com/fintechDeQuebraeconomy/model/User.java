@@ -88,4 +88,15 @@ public class User {
             System.out.println(t.showTransaction());
         }
     }
+
+    public String showUser(){
+        return String.format("""
+                Nome: %s
+                CPF: %s
+                E-mail: %s
+                Data de nascimento: %s
+                """, getName(),getCpf(),getEmail(),getBirthDate());
+    }
+
+
 }

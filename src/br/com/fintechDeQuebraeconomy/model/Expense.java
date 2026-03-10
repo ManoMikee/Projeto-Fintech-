@@ -54,6 +54,7 @@ public class Expense extends Transaction {
     @Override
         public String showTransaction(){
             return  String.format("""
+                GASTO :
                 Descrição: %s
                 Valor:  %.2f
                 Data: %s

@@ -9,6 +9,7 @@ import java.util.List;
 public class Goal extends Transaction {
 
     // Atributos
+    private String title;
     private BigDecimal stipulatedAmount;
     private LocalDate endDate;
     private BigDecimal currentValue;
@@ -36,6 +37,15 @@ public class Goal extends Transaction {
     }
 
     // Getters e Setters
+    public String getTitle(){return title;}
+
+    public void setTitle(String title){
+        if (title == null || title.trim().isEmpty()){
+            System.out.println("Adicione um válido título ao seu objetivo.");
+        }
+        else{ this.title = title; }
+    }
+
     public BigDecimal getStipulatedAmount() {return stipulatedAmount;}
 
     public void setStipulatedAmount(BigDecimal stipulatedAmount) {
@@ -72,12 +82,14 @@ public class Goal extends Transaction {
     @Override
     public String showTransaction(){
         return String.format("""
+                OBJETIVO: 
                 Descrição: %s
+                Meta: %s
                 Valor: %s
                 Data: %s
                 Acumulado: %s
                 Concluído: %b
-                """,getDescription(), getAmount().negate(), getDate(), getCurrentValue(), goalAchieved());
+                """,getDescription(),getStipulatedAmount(), getAmount().abs(), getDate(), getCurrentValue(), goalAchieved());
 
     }
 
@@ -156,7 +168,7 @@ public class Goal extends Transaction {
                     %s
                     Valor acumulado: R$%s | Progresso: %.2f%%
                     
-                    """, getDescription(), currentValue, percentage());
+                    """, getDescription(), currentValue.abs(), percentage());
         }
     }
 
