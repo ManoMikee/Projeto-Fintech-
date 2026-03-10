@@ -4,47 +4,50 @@ package br.com.fintechDeQuebraeconomy.model;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.util.List;
 
-public class Goal {
+public class Goal extends Transaction {
 
     // Atributos
-    private String title;
     private BigDecimal stipulatedAmount;
     private LocalDate endDate;
     private BigDecimal currentValue;
 
     // Construtor Vazio
-    public Goal() {}
+    public Goal() {
+        super();
+        this.currentValue = BigDecimal.ZERO;
+    }
 
     // Construtor Cheio
-    public Goal(String title, BigDecimal stipulatedAmount, LocalDate endDate) {
-        this.title = title;
+    public Goal(String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate) {
+        super(date, BigDecimal.ZERO , description);
         this.stipulatedAmount = stipulatedAmount;
         this.endDate = endDate;
         this.currentValue = BigDecimal.ZERO;
     }
 
-
-    // Getters e Setters
-    public String getTitle(){return title;}
-
-    public void setTitle(String title){
-        if (title == null || title.trim().isEmpty()){
-            System.out.println("Adicione um válido título ao seu objetivo.");
-        }
-        else{ this.title = title; }
+    // Cópia | Registro
+    public Goal(Goal other) {
+        super(LocalDate.now(), other.getAmount(), other.getDescription());
+        this.stipulatedAmount = other.stipulatedAmount;
+        this.endDate = other.endDate;
+        this.currentValue = other.currentValue;
     }
 
+    // Getters e Setters
     public BigDecimal getStipulatedAmount() {return stipulatedAmount;}
 
     public void setStipulatedAmount(BigDecimal stipulatedAmount) {
-        if (stipulatedAmount.scale() <= 2 & stipulatedAmount. precision() <= 10 ){
+        if (stipulatedAmount == null) {
+            System.out.println("Forneça um valor válido para seu Objetivo.");
+            return;
+        }
+
+        if (stipulatedAmount.scale() <= 2 && stipulatedAmount.precision() <= 10 ){
             this.stipulatedAmount = stipulatedAmount;
         }
-        else if (stipulatedAmount == null){
-            System.out.println("Forneça um valor válido para seu Objetivo.");
-        }
-        else if (stipulatedAmount.precision() > 10){
+        else {
             System.out.println("Valor estipulado excede o limite permitido.");
         }
 
@@ -63,33 +66,117 @@ public class Goal {
     }
 
     // Outros Métodos
+    @Override
+    public void setAmount(BigDecimal amount){ this.amount = amount; }
 
-    public void addValue(BigDecimal amout){
-        if (amout.compareTo(BigDecimal.ZERO) <= 0 ){
-            System.out.println("O valor fornecido é menor ou igual a 0");
+    @Override
+    public String showTransaction(){
+        return String.format("""
+                OBJETIVO: 
+                Descrição: %s
+                Meta: %s
+                Valor: %s
+                Data: %s
+                Acumulado: %s
+                Concluído: %b
+                """,getDescription(),getStipulatedAmount(), getAmount().abs(), getDate(), getCurrentValue(), goalAchieved());
+
+    }
+
+    public String showGoal() {
+        return String.format("""
+                Descrição: %s
+                Meta: R$%s
+                Concluído: %b
+                Acumulado: R$%s
+                Data Final: %s
+                """, getDescription(), getStipulatedAmount(), goalAchieved(), getCurrentValue(), getEndDate());
+    }
+
+    public  Goal registerDeposit(BigDecimal amount, LocalDate date){
+        if(amount == null || amount.compareTo(BigDecimal.ZERO) <= 0){
             System.out.println("Forneça um valor válido");
+            return  null;
         }
-        else {
-            currentValue = currentValue.add(amout);
+        this.currentValue = this.currentValue.add(amount);
+
+        Goal transactionGoal = new Goal(this);
+
+        transactionGoal.setAmount(amount);
+        transactionGoal.setDate(date);
+        transactionGoal.setCurrentValue(this.currentValue);
+
+        return transactionGoal;
+    }
+
+    public boolean goalAchieved(){
+        if (stipulatedAmount == null){
+            return false;
         }
+        return currentValue.compareTo(stipulatedAmount) >= 0;
     }
 
     public BigDecimal surplus(){
         return currentValue.subtract(stipulatedAmount);
     }
 
-    public boolean goalAchieved(){
-        boolean status = false;
-        if (currentValue.compareTo(stipulatedAmount) >= 0){
-            status = true;
+    public BigDecimal percentage(){
+        if (stipulatedAmount == null || stipulatedAmount.compareTo(BigDecimal.ZERO) == 0){
+            return BigDecimal.ZERO;
         }
-        return status;
+
+        BigDecimal hundred = BigDecimal.valueOf(100);
+        BigDecimal percentage = currentValue.multiply(hundred).divide(stipulatedAmount,2, RoundingMode.HALF_UP);
+        return percentage;
     }
 
-    public BigDecimal percentage(){
-        BigDecimal hundred = new BigDecimal(100);
-        BigDecimal percent = currentValue.multiply(hundred).divide(stipulatedAmount,2, RoundingMode.HALF_UP);
-        return percent;
+    public String getGoalStatus(){
+        if (goalAchieved()) {
+            BigDecimal surplus = surplus();
+
+            if (surplus.compareTo(BigDecimal.ZERO) > 0) {
+                return String.format("""
+                        Meta atingida!
+                        %s
+                        Meta: R$%.2f | Progresso: 100%%
+                        Você ultrapassou em R$%.2f
+                        
+                        """, getDescription(), stipulatedAmount, surplus);
+
+            } else {
+                return String.format("""
+                        Meta atingida com sucesso!
+                        %s
+                        Meta: R$%.2f | Progresso: %.2f%%
+                        
+                        """, getDescription(), stipulatedAmount, percentage());
+            }
+
+        } else {
+            return String.format("""
+                    Valor adicionado com sucesso!
+                    %s
+                    Valor acumulado: R$%s | Progresso: %.2f%%
+                    
+                    """, getDescription(), currentValue.abs(), percentage());
+        }
+    }
+
+    public static Goal findGoalByName(String name, List<Transaction> transactions) {
+
+        for (Transaction t : transactions) {
+
+            if (t instanceof Goal) {
+
+                Goal g = (Goal) t;
+
+                if (g.getDescription().equalsIgnoreCase(name)) {
+                    return g;
+                }
+            }
+        }
+
+        return null;
     }
 
 }

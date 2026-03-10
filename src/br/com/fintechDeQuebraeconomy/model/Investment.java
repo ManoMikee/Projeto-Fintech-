@@ -179,6 +179,7 @@ public class Investment extends Transaction {
     @Override
     public String showTransaction() {
         return String.format("""
+                INVESTIMENTO: 
                 Nome: %s
                 Descrição: %s
                 Valor:  %s
