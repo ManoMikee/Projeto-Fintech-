@@ -190,56 +190,18 @@ public  class Main {
 
                                                         case 2:
 
-                                                                boolean hasGoal = false;
+                                                                System.out.println("Digite o nome do objetivo: ");
+                                                                String goalName = sc.nextLine();
 
-                                                                for (Transaction t : user1.getTransactions()) {
-                                                                        if (t instanceof Goal) {
-                                                                                hasGoal = true;
-                                                                                break;
-                                                                        }
+                                                                Goal selectedGoal = Goal.findGoalByName(goalName, user1.getTransactions());
+
+                                                                if (selectedGoal == null){
+                                                                        System.out.printf("""
+                                                                                Objetivo não encontrado.
+                                                                                
+                                                                                """);
                                                                 }
-
-                                                                if (!hasGoal) {
-                                                                        System.out.println("Você ainda não possui objetivos cadastrados.");
-                                                                        break;
-                                                                }
-
-                                                                System.out.println("Escolha um objetivo: ");
-                                                                int i = 1;
-
-                                                                for (Transaction t : user1.getTransactions()) {
-
-                                                                        if (t instanceof Goal) {
-
-                                                                                Goal goal = (Goal) t;
-
-                                                                                System.out.printf("""
-                                                                                        %d.
-                                                                                        %s
-                                                                                        
-                                                                                        """, i, goal.showGoal());
-
-                                                                                i++;
-                                                                        }
-                                                                }
-                                                                int op3 = sc.nextInt();
-                                                                sc.nextLine();
-
-                                                                int i2 = 1;
-                                                                Goal selectedGoal = null;
-
-                                                                for (Transaction t : user1.getTransactions()) {
-
-                                                                        if (t instanceof Goal) {
-
-                                                                                if (i2 == op3) {
-                                                                                        selectedGoal = (Goal) t;
-                                                                                        break;
-                                                                                }
-
-                                                                                i2++;
-                                                                        }
-                                                                }
+                                                                else {
 
                                                                 System.out.println("Valor a adicionar: ");
                                                                 BigDecimal amount3 = sc.nextBigDecimal();
@@ -253,6 +215,7 @@ public  class Main {
                                                                 }
 
                                                                 System.out.println(selectedGoal.getGoalStatus());
+                                                                }
                                                                 break;
 
                                                 }
