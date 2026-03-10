@@ -4,6 +4,7 @@ package br.com.fintechDeQuebraeconomy.model;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Goal extends Transaction {
 
@@ -157,6 +158,23 @@ public class Goal extends Transaction {
                     
                     """, getDescription(), currentValue, percentage());
         }
+    }
+
+    public static Goal findGoalByName(String name, List<Transaction> transactions) {
+
+        for (Transaction t : transactions) {
+
+            if (t instanceof Goal) {
+
+                Goal g = (Goal) t;
+
+                if (g.getDescription().equalsIgnoreCase(name)) {
+                    return g;
+                }
+            }
+        }
+
+        return null;
     }
 
 }

@@ -9,7 +9,6 @@ import java.util.Scanner;
 public  class Main {
         public  static void main(String []args) {
                 Scanner sc = new Scanner(System.in);
-                List<Goal> listGoals = new ArrayList<>();
                 User user1 = null;
                 Transaction gasto1 = null;
                 int op;
@@ -181,8 +180,8 @@ public  class Main {
                                                                 sc.nextLine();
 
                                                                 LocalDate GoalDay = LocalDate.of(yearG, monthG, dayG);
-                                                                Goal newGoal = new Goal(description1, LocalDate.now(), amount2, GoalDay);
-                                                                listGoals.add(newGoal);
+                                                                Transaction newGoal = new Goal(description1, LocalDate.now(), amount2, GoalDay);
+                                                                user1.addTransaction(newGoal);
 
                                                                 System.out.println("Objetivo criado com sucesso!");
                                                                 System.out.println();
@@ -190,44 +189,33 @@ public  class Main {
                                                                 break;
 
                                                         case 2:
-                                                                if (listGoals.isEmpty()) {
-                                                                        System.out.println("Você ainda não possui objetivos cadastrados.");
-                                                                        System.out.println(" ");
-                                                                        break;
 
-                                                                }
-                                                                System.out.println("Escolha um objetivo: ");
-                                                                for (int i = 0; i < listGoals.size(); i++) {
-                                                                        Goal theGoal = listGoals.get(i);
+                                                                System.out.println("Digite o nome do objetivo: ");
+                                                                String goalName = sc.nextLine();
+
+                                                                Goal selectedGoal = Goal.findGoalByName(goalName, user1.getTransactions());
+
+                                                                if (selectedGoal == null){
                                                                         System.out.printf("""
-                                                                                %d.
-                                                                                %s
+                                                                                Objetivo não encontrado.
                                                                                 
-                                                                                """, (i + 1), theGoal.showGoal());
+                                                                                """);
                                                                 }
-
-                                                                int op3 = sc.nextInt();
-                                                                sc.nextLine();
-
-                                                                if (op3 < 0 || op3 > listGoals.size()){
-                                                                        System.out.println("Opção Inválida");
-                                                                        break;
-                                                                }
-
-                                                                Goal addGoal = listGoals.get(op3 - 1);
+                                                                else {
 
                                                                 System.out.println("Valor a adicionar: ");
                                                                 BigDecimal amount3 = sc.nextBigDecimal();
                                                                 sc.nextLine();
 
-                                                                Goal transactionGoal = addGoal.registerDeposit(amount3, LocalDate.now());
+                                                                Goal transactionGoal = selectedGoal.registerDeposit(amount3, LocalDate.now());
 
                                                                 if (transactionGoal != null) {
                                                                         user1.addTransaction(transactionGoal);
                                                                         gasto1 = transactionGoal;
                                                                 }
 
-                                                                System.out.println(addGoal.getGoalStatus());
+                                                                System.out.println(selectedGoal.getGoalStatus());
+                                                                }
                                                                 break;
 
                                                 }
