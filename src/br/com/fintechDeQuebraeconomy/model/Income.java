@@ -40,11 +40,10 @@ public class Income extends Transaction {
     public String showTransaction() {
 
         return String.format("""
-                ---- INCOME (RECEITA) ----
-                Description (Descrição): %s
-                Amount (Valor): %.2f
-                Date (Data): %s
-                Source (Fonte): %s
+                Descrição: %s
+                Valor:  %.2f
+                Data: %s
+                Fonte: %s
                 """,
                 getDescription(),
                 getAmount(),
