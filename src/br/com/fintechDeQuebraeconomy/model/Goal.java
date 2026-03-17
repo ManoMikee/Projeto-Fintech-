@@ -89,7 +89,8 @@ public class Goal extends Transaction {
                 Data: %s
                 Acumulado: %s
                 Concluído: %b
-                """,getDescription(),getStipulatedAmount(), getAmount().abs(), getDate(), getCurrentValue(), goalAchieved());
+                Data final: %s
+                """,getDescription(),getStipulatedAmount(), getAmount().abs(), getDate(), getCurrentValue(), goalAchieved(),getEndDate());
 
     }
 

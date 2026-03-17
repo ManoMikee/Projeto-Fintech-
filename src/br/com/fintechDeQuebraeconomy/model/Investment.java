@@ -148,8 +148,13 @@ public class Investment extends Transaction {
         return incomeTax.setScale(2, RoundingMode.HALF_UP);
     }
 
+    /**
+     *
+     * - O rendimento liquido corresponde ao rendimento bruto menos o imposto de renda, quando aplicavel.
+     *  - Subtrai o rendimento ao valor
 
-    //Subtrai o rendimento ao valor investido
+     *  */
+
 
     public BigDecimal calculateNetReturn(){
 
@@ -188,6 +193,9 @@ public class Investment extends Transaction {
                 Instituição Financeira %s
                 Sujeito a IR: %b
                 Taxa de rendimento: %.2f
-                """,getInvestmentName(),getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(),getPayoutDate(),getIssuingBank(),isTaxable(),getInterestRate());
+                Rendimento Bruto: %s
+                Rendimento liquido: %s
+                Total no vencimento: %s 
+                """,getInvestmentName(),getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(),getPayoutDate(),getIssuingBank(),isTaxable(),getInterestRate(), calculateGrossReturn().setScale(2,RoundingMode.HALF_UP),calculateNetReturn().setScale(2,RoundingMode.HALF_UP),calculateTotalAtMaturity().setScale(2,RoundingMode.HALF_UP));
     }
 }
