@@ -4,18 +4,25 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public abstract class Transaction {
-    protected LocalDate date;
-    protected BigDecimal amount;
-    protected String description;
+    private LocalDate date;
+    private BigDecimal amount;
+    private String description;
+    private Category category;
 
     public Transaction() {
 
     }
 
-    public Transaction(LocalDate date, BigDecimal amount, String description) {
+    public Transaction(LocalDate date, BigDecimal amount, String description, Category category) {
         this.date = date;
         this.amount = amount;
         this.description = description;
+        this.category = category;
+        if(category == Category.EXPENSE){
+            this.amount = amount.abs().negate();
+        }else {
+            this.amount =   amount.abs();
+        }
     }
 
     public LocalDate getDate() {
@@ -31,7 +38,9 @@ public abstract class Transaction {
     }
 
 
-    public abstract void setAmount(BigDecimal amount);
+    public void setAmount(BigDecimal amount){
+        this.amount = amount;
+    }
 
 
     public String getDescription() {
@@ -46,6 +55,9 @@ public abstract class Transaction {
         }
     }
 
+    public Category getCategory() {
+        return category;
+    }
 
     public abstract String showTransaction();
 

@@ -21,8 +21,8 @@ public class Goal extends Transaction {
     }
 
     // Construtor Cheio
-    public Goal(String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate) {
-        super(date, BigDecimal.ZERO , description);
+    public Goal(String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate, Category category) {
+        super(date, BigDecimal.ZERO , description, category);
         this.stipulatedAmount = stipulatedAmount;
         this.endDate = endDate;
         this.currentValue = BigDecimal.ZERO;
@@ -30,7 +30,7 @@ public class Goal extends Transaction {
 
     // Cópia | Registro
     public Goal(Goal other) {
-        super(LocalDate.now(), other.getAmount(), other.getDescription());
+        super(other.getDate(), other.getAmount(), other.getDescription(), other.getCategory());
         this.stipulatedAmount = other.stipulatedAmount;
         this.endDate = other.endDate;
         this.currentValue = other.currentValue;
@@ -75,14 +75,11 @@ public class Goal extends Transaction {
         this.currentValue = currentValue;
     }
 
-    // Outros Métodos
-    @Override
-    public void setAmount(BigDecimal amount){ this.amount = amount; }
 
     @Override
     public String showTransaction(){
         return String.format("""
-                OBJETIVO: 
+                %s: 
                 Descrição: %s
                 Meta: %s
                 Valor: %s
@@ -90,7 +87,7 @@ public class Goal extends Transaction {
                 Acumulado: %s
                 Concluído: %b
                 Data final: %s
-                """,getDescription(),getStipulatedAmount(), getAmount().abs(), getDate(), getCurrentValue(), goalAchieved(),getEndDate());
+                """,getCategory(),getDescription(),getStipulatedAmount(), getAmount().abs(), getDate(), getCurrentValue(), goalAchieved(),getEndDate());
 
     }
 

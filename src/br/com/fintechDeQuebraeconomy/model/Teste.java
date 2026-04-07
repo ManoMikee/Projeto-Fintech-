@@ -12,16 +12,16 @@ public class Teste {
 
 
         //UTILIZAÇÃO DE POLIMORFISMO
-        Transaction investimento2 = new Investment(hoje, new BigDecimal("1000"),"Cdb",vence,"tesouro","itau",true, new BigDecimal("20"));
+        Transaction investimento2 = new Investment(hoje, new BigDecimal("1000"),"Cdb",vence,"tesouro","itau",true, new BigDecimal("20"), Category.INVESTMENT);
 
-        Transaction gasto2 = new Expense(hoje,new BigDecimal("3211"),"Gastei", "Crédito", true,false);
-        Transaction goal2 = new Goal("Tete",hoje,new BigDecimal("200"),hoje);
+        Transaction gasto2 = new Expense(hoje,new BigDecimal("3211"),"Gastei", "Crédito", true,false, Category.EXPENSE);
+        Transaction goal2 = new Goal("Tete",hoje,new BigDecimal("200"),hoje, Category.GOAL);
 
         //DEFININDO TIPOS PARA TESTE DE METODOS.
-        Investment investimento = new Investment(hoje, new BigDecimal("1000"),"Cdb",vence,"tesouro","itau",true, new BigDecimal("20"));
+        Investment investimento = new Investment(hoje, new BigDecimal("1000"),"Cdb",vence,"tesouro","itau",true, new BigDecimal("20"), Category.INVESTMENT);
 
-        Expense gasto = new Expense(hoje,new BigDecimal("3211"),"Gastei", "Crédito", true,false);
-        Goal goal = new Goal("Tete",hoje,new BigDecimal("200"),hoje);
+        Expense gasto = new Expense(hoje,new BigDecimal("3211"),"Gastei", "Crédito", true,false, Category.EXPENSE);
+        Goal goal = new Goal("Tete",hoje,new BigDecimal("200"),hoje, Category.GOAL);
 
 
         usuario.addTransaction(investimento);
@@ -34,14 +34,6 @@ public class Teste {
         usuario.showTransactions();
 
 
-        System.out.println("Rendimento bruto "+ investimento.calculateGrossReturn());
-        System.out.println("Rendimento Líquido: "+ investimento.calculateNetReturn());
-        System.out.println("Total ao recebimento: "+ investimento.calculateTotalAtMaturity());
-        System.out.println("Taxa: " + investimento.calculateIncomeTax());
-        System.out.println(goal.percentage());
-        goal.setCurrentValue(new BigDecimal("100"));
-        System.out.println(goal.percentage());
-        System.out.println(gasto.getPaymentMethod());
         System.out.println(gasto.showTransaction());
 
 

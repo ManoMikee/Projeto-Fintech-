@@ -11,10 +11,10 @@ public class Income extends Transaction {
         super();
     }
 
-    public Income(LocalDate date, BigDecimal amount, String description, String source) {
-        super(date, amount, description);
+    public Income(LocalDate date, BigDecimal amount, String description, String source, Category category) {
+        super(date, amount, description, category);
         this.source = source;
-        setAmount(amount);
+
     }
 
     public String getSource() {
@@ -25,27 +25,18 @@ public class Income extends Transaction {
         this.source = source;
     }
 
-    @Override
-    public void setAmount(BigDecimal amount) {
 
-
-        if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            this.amount = amount.negate();
-        } else {
-            this.amount = amount;
-        }
-    }
 
     @Override
     public String showTransaction() {
 
         return String.format("""
-                RECEITA:
+                %s:
                 Descrição: %s
                 Valor:  %.2f
                 Data: %s
                 Fonte: %s
-                """,
+                """,getCategory(),
                 getDescription(),
                 getAmount(),
                 getDate(),
