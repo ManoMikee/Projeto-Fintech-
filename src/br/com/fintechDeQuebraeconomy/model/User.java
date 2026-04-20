@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private long id;
     private String name;
     private String cpf;
     private String email;
@@ -15,12 +16,13 @@ public class User {
 
     public User() {}
 
-    public User(String name, String cpf, String email, String password, LocalDate birthDate) {
+    public User(long id, String name, String cpf, String email, String password, LocalDate birthDate) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
         this.password = password;
         this.birthDate = birthDate;
+        this.id = id;
         this.transactions = new ArrayList<>();
     }
 
@@ -68,6 +70,10 @@ public class User {
         return transactions;
     }
 
+    public long getId() {
+        return id;
+    }
+
     /**
      * Método privado: não use fora da classe.
      * Use addTransaction() para adicionar itens à lista.
@@ -88,15 +94,19 @@ public class User {
             System.out.println(t.showTransaction());
         }
     }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nome: ").append(this.name).append("\n");
+        sb.append("CPF: ").append(this.cpf).append("\n");
+        sb.append("E-mail: ").append(this.email).append("\n");
+        sb.append("Data de nascimento: ").append(this.birthDate).append("\n");
 
-    public String showUser(){
-        return String.format("""
-                Nome: %s
-                CPF: %s
-                E-mail: %s
-                Data de nascimento: %s
-                """, getName(),getCpf(),getEmail(),getBirthDate());
+
+
+        return sb.toString();
     }
+
 
 
 }

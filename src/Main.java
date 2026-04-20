@@ -52,7 +52,7 @@ public  class Main {
                                         System.out.println("Digite a senha: ");
                                         String senha = sc.nextLine();
 
-                                        currentUser = new User(name, cpf, email, senha, birthDay);
+                                        currentUser = new User(1l,name, cpf, email, senha, birthDay);
                                         Accounts.addAccont(currentUser);
                                         System.out.println("Cadastrado com Sucesso.");
 
@@ -120,7 +120,7 @@ public  class Main {
                                                                 LocalDate dateR = LocalDate.of(yearR, monthR, dayR);
                                                                 System.out.println("Fonte da receita:");
                                                                 String source = sc.nextLine();
-                                                                Transaction receita = new Income(dateR, amountR, descriptionR, source);
+                                                                Transaction receita = new Income(2L,dateR, amountR, descriptionR, source, Category.INCOME);
                                                                 currentUser.addTransaction(receita);
                                                                 System.out.println("Receita adicionada com sucesso.");
 
@@ -149,7 +149,7 @@ public  class Main {
                                                                 boolean paymentStatus = sc.nextBoolean();
                                                                 System.out.println("Gasto recente: ");
                                                                 boolean recurringPayment = sc.nextBoolean();
-                                                                transaction = new Expense(transactionDay, amount, description, paymentMethod, paymentStatus, recurringPayment);
+                                                                transaction = new Expense(3L, transactionDay, amount, description, paymentMethod, paymentStatus, recurringPayment, Category.EXPENSE);
                                                                 currentUser.addTransaction(transaction);
 
                                                                 break;
@@ -189,7 +189,7 @@ public  class Main {
                                                                 System.out.println("Rendimento anual em %");
                                                                 BigDecimal taxaDeJuros = sc.nextBigDecimal();
                                                                 sc.nextLine();
-                                                                Transaction investment = new Investment(iniInvest, valorInvest, descriptionInvest, payoutDate, nomeInvest, nomeCorretora, sujeitoIR, taxaDeJuros);
+                                                                Transaction investment = new Investment(4L,iniInvest, valorInvest, descriptionInvest, payoutDate, nomeInvest, nomeCorretora, sujeitoIR, taxaDeJuros, Category.INVESTMENT);
                                                                 currentUser.addTransaction(investment);
                                                                 break;
                                                         case 4:
@@ -227,7 +227,7 @@ public  class Main {
                                                                                 sc.nextLine();
 
                                                                                 LocalDate GoalDay = LocalDate.of(yearG, monthG, dayG);
-                                                                                Transaction newGoal = new Goal(description1, LocalDate.now(), amount2, GoalDay);
+                                                                                Transaction newGoal = new Goal(4l,description1, LocalDate.now(), amount2, GoalDay, Category.GOAL);
                                                                                 currentUser.addTransaction(newGoal);
 
                                                                                 System.out.println("Objetivo criado com sucesso!");
