@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public abstract class Transaction {
+    private long id;
     private LocalDate date;
     private BigDecimal amount;
     private String description;
@@ -13,7 +14,8 @@ public abstract class Transaction {
 
     }
 
-    public Transaction(LocalDate date, BigDecimal amount, String description, Category category) {
+    public Transaction(long id,LocalDate date, BigDecimal amount, String description, Category category) {
+        this.id =id;
         this.date = date;
         this.amount = amount;
         this.description = description;
@@ -62,6 +64,7 @@ public abstract class Transaction {
     public abstract String showTransaction();
 
 
-
-
+    public long getId() {
+        return id;
+    }
 }

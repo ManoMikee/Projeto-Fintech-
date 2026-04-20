@@ -21,8 +21,8 @@ public class Goal extends Transaction {
     }
 
     // Construtor Cheio
-    public Goal(String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate, Category category) {
-        super(date, BigDecimal.ZERO , description, category);
+    public Goal(long id,String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate, Category category) {
+        super(id ,date, BigDecimal.ZERO , description, category);
         this.stipulatedAmount = stipulatedAmount;
         this.endDate = endDate;
         this.currentValue = BigDecimal.ZERO;
@@ -30,11 +30,12 @@ public class Goal extends Transaction {
 
     // Cópia | Registro
     public Goal(Goal other) {
-        super(other.getDate(), other.getAmount(), other.getDescription(), other.getCategory());
+        super(other.getId(),other.getDate(), other.getAmount(), other.getDescription(), other.getCategory());
         this.stipulatedAmount = other.stipulatedAmount;
         this.endDate = other.endDate;
         this.currentValue = other.currentValue;
     }
+
 
     // Getters e Setters
     public String getTitle(){return title;}

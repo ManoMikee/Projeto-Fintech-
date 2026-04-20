@@ -22,7 +22,7 @@ public class Accounts {
     }
     public static void exibirContas(){
         for (User ac :  accounts){
-            System.out.println(ac.showUser());
+            System.out.println(ac);
         }
     }
 
@@ -36,4 +36,14 @@ public class Accounts {
 
         return null;
     }
+
+    public  static User findById(long id){
+        for(User u : accounts){
+            if(u.getId() == id){
+                return u;
+            }
+        }
+        return null;
+    }
+
 }

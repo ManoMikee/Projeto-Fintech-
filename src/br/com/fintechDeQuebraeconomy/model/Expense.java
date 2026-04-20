@@ -14,8 +14,8 @@ public class Expense extends Transaction {
         super();
     }
 
-    public Expense(LocalDate date, BigDecimal amount, String description, String paymentMethod, boolean paymentStatus, boolean recurringPayment, Category category) {
-        super(date, amount, description, category);
+    public Expense(long id, LocalDate date, BigDecimal amount, String description, String paymentMethod, boolean paymentStatus, boolean recurringPayment, Category category) {
+        super(id, date, amount, description, category);
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
         this.recurringPayment = recurringPayment;
