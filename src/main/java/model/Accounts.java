@@ -1,4 +1,4 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;

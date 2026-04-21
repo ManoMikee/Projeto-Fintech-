@@ -1,4 +1,4 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

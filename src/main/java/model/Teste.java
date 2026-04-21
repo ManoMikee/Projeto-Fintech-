@@ -1,10 +1,28 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class Teste {
-    static void main(String[] args) {
+   public  static void main(String[] args) {
+
+
+
+
+               try {
+                   Connection conexao = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl", "usuario","senha");
+                   System.out.println("Conexão realizada!");
+               } catch (SQLException e) {
+                   System.err.println(e.getMessage());
+               }
+
+
+
+
+
         LocalDate bday = LocalDate.of(1994,9,27);
         LocalDate vence = LocalDate.of(2026,12,12);
         User usuario = new User(1l,"nico","445855","nicolasAlbuquerque@gmail.com", "827941",bday);

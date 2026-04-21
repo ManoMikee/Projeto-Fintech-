@@ -1,4 +1,4 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 
     public enum Category {

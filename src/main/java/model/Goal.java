@@ -1,9 +1,10 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 // Importações
+
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class Goal extends Transaction {
