@@ -1,4 +1,4 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,9 +14,8 @@ public class Expense extends Transaction {
         super();
     }
 
-    public Expense(LocalDate date, BigDecimal amount, String description, String paymentMethod, boolean paymentStatus, boolean recurringPayment) {
-        super(date, amount, description);
-        setAmount(amount);
+    public Expense(long id, LocalDate date, BigDecimal amount, String description, String paymentMethod, boolean paymentStatus, boolean recurringPayment, Category category) {
+        super(id, date, amount, description, category);
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
         this.recurringPayment = recurringPayment;
@@ -46,20 +45,18 @@ public class Expense extends Transaction {
         this.recurringPayment = recurringPayment;
     }
 
-    @Override
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount.abs().negate();
-    }
+
 
     @Override
         public String showTransaction(){
             return  String.format("""
+                %s :
                 Descrição: %s
                 Valor:  %.2f
                 Data: %s
                 Metodo de pagamento: %s
                 Status do pagamento: %b
                 Gasto Recorrente: %b
-                """,getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(), getPaymentMethod(),isPaymentStatus(), isRecurringPayment());
+                """,getCategory(),getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(), getPaymentMethod(),isPaymentStatus(), isRecurringPayment());
     }
 }

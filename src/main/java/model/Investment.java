@@ -1,4 +1,4 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,9 +12,8 @@ public class Investment extends Transaction {
     private boolean taxable;
     private BigDecimal interestRate;
 
-    public Investment(LocalDate date, BigDecimal amount, String description, LocalDate payoutDate, String investmentName, String issuingBank, boolean taxable, BigDecimal interestRate){
-        super(date, amount, description);
-        setAmount(amount);
+    public Investment(long id, LocalDate date, BigDecimal amount, String description, LocalDate payoutDate, String investmentName, String issuingBank, boolean taxable, BigDecimal interestRate,Category category){
+        super(id, date, amount, description, category);
         this.payoutDate = payoutDate;
         this.investmentName = investmentName;
         this.issuingBank  = issuingBank;
@@ -148,8 +147,13 @@ public class Investment extends Transaction {
         return incomeTax.setScale(2, RoundingMode.HALF_UP);
     }
 
+    /**
+     *
+     * - O rendimento liquido corresponde ao rendimento bruto menos o imposto de renda, quando aplicavel.
+     *  - Subtrai o rendimento ao valor
 
-    //Subtrai o rendimento ao valor investido
+     *  */
+
 
     public BigDecimal calculateNetReturn(){
 
@@ -169,16 +173,11 @@ public class Investment extends Transaction {
         return getAmount().abs().add(calculateNetReturn());
     }
 
-    @Override
-    public void setAmount(BigDecimal amount) {
-            this.amount = amount.abs().negate();
-
-
-    }
 
     @Override
     public String showTransaction() {
         return String.format("""
+                %s: 
                 Nome: %s
                 Descrição: %s
                 Valor:  %s
@@ -187,6 +186,9 @@ public class Investment extends Transaction {
                 Instituição Financeira %s
                 Sujeito a IR: %b
                 Taxa de rendimento: %.2f
-                """,getInvestmentName(),getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(),getPayoutDate(),getIssuingBank(),isTaxable(),getInterestRate());
+                Rendimento Bruto: %s
+                Rendimento liquido: %s
+                Total no vencimento: %s 
+                """,getCategory(),getInvestmentName(),getDescription(), getAmount().abs().setScale(2, RoundingMode.HALF_UP), getDate(),getPayoutDate(),getIssuingBank(),isTaxable(),getInterestRate(), calculateGrossReturn().setScale(2,RoundingMode.HALF_UP),calculateNetReturn().setScale(2,RoundingMode.HALF_UP),calculateTotalAtMaturity().setScale(2,RoundingMode.HALF_UP));
     }
 }

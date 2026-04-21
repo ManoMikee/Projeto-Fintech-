@@ -1,13 +1,16 @@
-package br.com.fintechDeQuebraeconomy.model;
+package model;
 
 // Importações
+
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.math.BigDecimal;
+import java.util.List;
 
 public class Goal extends Transaction {
 
     // Atributos
+    private String title;
     private BigDecimal stipulatedAmount;
     private LocalDate endDate;
     private BigDecimal currentValue;
@@ -19,8 +22,8 @@ public class Goal extends Transaction {
     }
 
     // Construtor Cheio
-    public Goal(String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate) {
-        super(date, BigDecimal.ZERO , description);
+    public Goal(long id,String description, LocalDate date, BigDecimal stipulatedAmount, LocalDate endDate, Category category) {
+        super(id ,date, BigDecimal.ZERO , description, category);
         this.stipulatedAmount = stipulatedAmount;
         this.endDate = endDate;
         this.currentValue = BigDecimal.ZERO;
@@ -28,13 +31,23 @@ public class Goal extends Transaction {
 
     // Cópia | Registro
     public Goal(Goal other) {
-        super(LocalDate.now(), other.getAmount(), other.getDescription());
+        super(other.getId(),other.getDate(), other.getAmount(), other.getDescription(), other.getCategory());
         this.stipulatedAmount = other.stipulatedAmount;
         this.endDate = other.endDate;
         this.currentValue = other.currentValue;
     }
 
+
     // Getters e Setters
+    public String getTitle(){return title;}
+
+    public void setTitle(String title){
+        if (title == null || title.trim().isEmpty()){
+            System.out.println("Adicione um válido título ao seu objetivo.");
+        }
+        else{ this.title = title; }
+    }
+
     public BigDecimal getStipulatedAmount() {return stipulatedAmount;}
 
     public void setStipulatedAmount(BigDecimal stipulatedAmount) {
@@ -64,19 +77,19 @@ public class Goal extends Transaction {
         this.currentValue = currentValue;
     }
 
-    // Outros Métodos
-    @Override
-    public void setAmount(BigDecimal amount){ this.amount = amount; }
 
     @Override
     public String showTransaction(){
         return String.format("""
+                %s: 
                 Descrição: %s
+                Meta: %s
                 Valor: %s
                 Data: %s
                 Acumulado: %s
                 Concluído: %b
-                """,getDescription(), getAmount().negate(), getDate(), getCurrentValue(), goalAchieved());
+                Data final: %s
+                """,getCategory(),getDescription(),getStipulatedAmount(), getAmount().abs(), getDate(), getCurrentValue(), goalAchieved(),getEndDate());
 
     }
 
@@ -155,8 +168,25 @@ public class Goal extends Transaction {
                     %s
                     Valor acumulado: R$%s | Progresso: %.2f%%
                     
-                    """, getDescription(), currentValue, percentage());
+                    """, getDescription(), currentValue.abs(), percentage());
         }
+    }
+
+    public static Goal findGoalByName(String name, List<Transaction> transactions) {
+
+        for (Transaction t : transactions) {
+
+            if (t instanceof Goal) {
+
+                Goal g = (Goal) t;
+
+                if (g.getDescription().equalsIgnoreCase(name)) {
+                    return g;
+                }
+            }
+        }
+
+        return null;
     }
 
 }
