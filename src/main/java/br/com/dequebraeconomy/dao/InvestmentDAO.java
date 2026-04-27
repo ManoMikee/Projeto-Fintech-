@@ -1,7 +1,7 @@
-package dao;
+package br.com.dequebraeconomy.dao;
 
-import model.Category;
-import model.Investment;
+import br.com.dequebraeconomy.model.Category;
+import br.com.dequebraeconomy.model.Investment;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -79,7 +79,6 @@ public class InvestmentDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // Construtor: (id, date, amount, description, payoutDate, investmentName, issuingBank, taxable, interestRate, category)
                 Investment investment = new Investment(
                         rs.getLong("id"),
                         rs.getDate("dt_transacao").toLocalDate(),
@@ -90,7 +89,7 @@ public class InvestmentDAO {
                         rs.getString("nm_banco"),
                         rs.getInt("fl_taxable") == 1,
                         rs.getBigDecimal("vl_taxa_juros"),
-                        Category.INVESTMENT  // Investment sempre é categoria INVESTMENT
+                        Category.INVESTMENT
                 );
 
                 investments.add(investment);

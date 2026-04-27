@@ -1,7 +1,7 @@
-package dao;
+package br.com.dequebraeconomy.dao;
 
-import model.Category;
-import model.Income;
+import br.com.dequebraeconomy.model.Category;
+import br.com.dequebraeconomy.model.Income;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,14 +72,13 @@ public class IncomeDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // Construtor: (id, date, amount, description, source, category)
                 Income income = new Income(
                         rs.getLong("id"),
                         rs.getDate("dt_transacao").toLocalDate(),
                         rs.getBigDecimal("vl_amount"),
                         rs.getString("ds_descricao"),
                         rs.getString("ds_source"),
-                        Category.INCOME   // Income sempre é categoria INCOME
+                        Category.INCOME
                 );
 
                 incomes.add(income);

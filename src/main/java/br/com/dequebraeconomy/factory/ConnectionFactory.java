@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 
     private static final String URL = "jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl";
-    private static final String USER = "RM566918";
-    private static final String PASSWORD = "270994";
+    private static final String USER = "RM566978";
+    private static final String PASSWORD = "080396";
 
 
     // MÉTODO PARA OBTER UMA CONEXÃO COMO BANCO DE DADOS

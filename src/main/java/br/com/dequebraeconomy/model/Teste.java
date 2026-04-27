@@ -1,10 +1,10 @@
-package model;
+package br.com.dequebraeconomy.model;
 
-import dao.ExpenseDAO;
-import dao.GoalDAO;
-import dao.IncomeDAO;
-import dao.InvestmentDAO;
-import factory.ConnectionFactory;
+import br.com.dequebraeconomy.dao.ExpenseDAO;
+import br.com.dequebraeconomy.dao.GoalDAO;
+import br.com.dequebraeconomy.dao.IncomeDAO;
+import br.com.dequebraeconomy.dao.InvestmentDAO;
+import br.com.dequebraeconomy.factory.ConnectionFactory;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -16,12 +16,13 @@ public class Teste {
 
     public static void main(String[] args) {
 
-
         try (Connection connection = ConnectionFactory.getConnection()) {
 
             System.out.println("Conexão estabelecida com sucesso!\n");
 
-
+            // ============================================================
+            // INCOME — 5 inserts + getAll
+            // ============================================================
             IncomeDAO incomeDAO = new IncomeDAO(connection);
 
             System.out.println("=== INSERINDO INCOMES ===");
@@ -37,6 +38,9 @@ public class Teste {
                 System.out.println(i.showTransaction());
             }
 
+            // ============================================================
+            // EXPENSE — 5 inserts + getAll
+            // ============================================================
             ExpenseDAO expenseDAO = new ExpenseDAO(connection);
 
             System.out.println("=== INSERINDO EXPENSES ===");
@@ -52,6 +56,9 @@ public class Teste {
                 System.out.println(e.showTransaction());
             }
 
+            // ============================================================
+            // INVESTMENT — 5 inserts + getAll
+            // ============================================================
             InvestmentDAO investmentDAO = new InvestmentDAO(connection);
 
             System.out.println("=== INSERINDO INVESTMENTS ===");
@@ -66,14 +73,18 @@ public class Teste {
             for (Investment inv : investments) {
                 System.out.println(inv.showTransaction());
             }
+
+            // ============================================================
+            // GOAL — 5 inserts + getAll
+            // ============================================================
             GoalDAO goalDAO = new GoalDAO(connection);
 
             System.out.println("=== INSERINDO GOALS ===");
-            goalDAO.insert(new Goal(0, "Viagem para Europa",    LocalDate.now(), new BigDecimal("15000.00"), LocalDate.of(2025, 6, 1),   Category.GOAL));
-            goalDAO.insert(new Goal(0, "Reserva de emergência", LocalDate.now(), new BigDecimal("10000.00"), LocalDate.of(2024, 12, 31), Category.GOAL));
-            goalDAO.insert(new Goal(0, "Notebook novo",         LocalDate.now(), new BigDecimal("4500.00"),  LocalDate.of(2024, 8, 1),   Category.GOAL));
-            goalDAO.insert(new Goal(0, "Curso de inglês",       LocalDate.now(), new BigDecimal("2400.00"),  LocalDate.of(2024, 10, 1),  Category.GOAL));
-            goalDAO.insert(new Goal(0, "Entrada do apartamento",LocalDate.now(), new BigDecimal("50000.00"), LocalDate.of(2027, 1, 1),   Category.GOAL));
+            goalDAO.insert(new Goal(0, "Viagem para Europa",     LocalDate.now(), new BigDecimal("15000.00"), LocalDate.of(2025, 6, 1),   Category.GOAL));
+            goalDAO.insert(new Goal(0, "Reserva de emergência",  LocalDate.now(), new BigDecimal("10000.00"), LocalDate.of(2024, 12, 31), Category.GOAL));
+            goalDAO.insert(new Goal(0, "Notebook novo",          LocalDate.now(), new BigDecimal("4500.00"),  LocalDate.of(2024, 8, 1),   Category.GOAL));
+            goalDAO.insert(new Goal(0, "Curso de inglês",        LocalDate.now(), new BigDecimal("2400.00"),  LocalDate.of(2024, 10, 1),  Category.GOAL));
+            goalDAO.insert(new Goal(0, "Entrada do apartamento", LocalDate.now(), new BigDecimal("50000.00"), LocalDate.of(2027, 1, 1),   Category.GOAL));
 
             System.out.println("\n=== BUSCANDO TODOS OS GOALS ===");
             List<Goal> goals = goalDAO.getAll();

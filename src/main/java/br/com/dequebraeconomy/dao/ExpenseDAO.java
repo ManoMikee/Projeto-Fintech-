@@ -1,7 +1,7 @@
-package dao;
+package br.com.dequebraeconomy.dao;
 
-import model.Category;
-import model.Expense;
+import br.com.dequebraeconomy.model.Category;
+import br.com.dequebraeconomy.model.Expense;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -77,16 +77,15 @@ public class ExpenseDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // Construtor: (id, date, amount, description, paymentMethod, paymentStatus, recurringPayment, category)
                 Expense expense = new Expense(
                         rs.getLong("id"),
                         rs.getDate("dt_transacao").toLocalDate(),
                         rs.getBigDecimal("vl_amount"),
                         rs.getString("ds_descricao"),
                         rs.getString("ds_payment_method"),
-                        rs.getInt("fl_payment_status") == 1,   // 1 = true, 0 = false
-                        rs.getInt("fl_recurring") == 1,        // 1 = true, 0 = false
-                        Category.EXPENSE  // Expense sempre é categoria EXPENSE
+                        rs.getInt("fl_payment_status") == 1,
+                        rs.getInt("fl_recurring") == 1,
+                        Category.EXPENSE
                 );
 
                 expenses.add(expense);
